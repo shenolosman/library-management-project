@@ -1,6 +1,11 @@
-namespace BookService.Model
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BookService.Model.DTOs
 {
-    public class Book
+    public class BookList
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }
@@ -9,9 +14,9 @@ namespace BookService.Model
         public string? Image { get; set; }
         public string? Category { get; set; }
         public DateTime? UpdatedDate { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; }
         public int PageNumber { get; set; }
         public int TotalOfBook { get; set; }
-        public bool IsAvailable { get; set; } = true;
+        public bool IsAvailable { get; set; }
     }
 }
