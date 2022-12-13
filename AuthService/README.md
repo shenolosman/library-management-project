@@ -2,5 +2,6 @@
 
 api routes:
 
-`/register` with name,email,password,role
-`/login` with email,password
+`/register` with name, email, password, role(nullable)
+
+`/login` with email, password
