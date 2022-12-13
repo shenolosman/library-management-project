@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\AuthService",
+    "\\AuthService\\Model",
+    "\\BookService",
+    "\\LoanService"
+  ],
+  "SelectedNode": "\\AuthService\\Model",
+  "PreviewInSolutionExplorer": false
+}
