@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "t6uz50My1sJ26TlygxfsmPxkRIbkCsUk0+rXMX5CZ5BaCNb9yPIm40ot+0u8vG4vasmwwS/GW905n0b+DT++oA==",
+  "dgSpecHash": "78WMgqwIzHgk/fjpqxFoiaBUDj5sUF4pBO1SafFQbV4CR2OJ/mupyqsHOD0Bl0m54u/8WfL8+MAMiv92kMpEfg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\XENOL\\source\\library-management-project\\authservice\\AuthService.csproj",
+  "projectFilePath": "C:\\Users\\XENOL\\source\\library-management-project\\AuthService\\AuthService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\XENOL\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\XENOL\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

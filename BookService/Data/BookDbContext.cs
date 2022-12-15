@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookService.Data
 {
-    public class BookDbContext:DbContext
+    public class BookDbContext : DbContext
     {
-        public BookDbContext(DbContextOptions<BookDbContext> opt):base(opt) { }
-        public DbSet<Book> Books { get; set; }
+        public BookDbContext(DbContextOptions<BookDbContext> options) : base(options) { }
+        public DbSet<Book> Books => Set<Book>();
     }
 }

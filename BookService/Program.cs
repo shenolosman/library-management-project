@@ -2,6 +2,7 @@ using System.Text;
 using BookService.Data;
 using BookService.Model;
 using BookService.Model.DTOs;
+using BookService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -25,9 +26,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
+builder.Services.AddGrpc();
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<BookDbContext>();
@@ -36,6 +39,7 @@ using (var scope = app.Services.CreateScope())
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapGrpcService<LibraryService>();
 
 app.MapPost("/book", [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")] async (BookCreate bookDto, BookDbContext ctx) =>
 {
@@ -53,7 +57,7 @@ app.MapPost("/book", [Authorize(AuthenticationSchemes = JwtBearerDefaults.Authen
     await ctx.Books.AddAsync(createdBook);
     await ctx.SaveChangesAsync();
 
-    return Results.Created($"/book/{createdBook.Name}",$"{createdBook.Name} created!");
+    return Results.Created($"/book/{createdBook.Name}", $"{createdBook.Name} created!");
 });
 
 app.MapPut("/book/{id}", [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")] async (Guid id, BookUpdate bookDto, BookDbContext ctx) =>
@@ -116,6 +120,7 @@ app.MapGet("/book/{id}", async (Guid id, BookDbContext ctx) =>
 
 app.MapGet("/books", async (BookDbContext ctx) =>
 {
+    //here should return booklist dto
     return await ctx.Books.ToListAsync();
 });
 

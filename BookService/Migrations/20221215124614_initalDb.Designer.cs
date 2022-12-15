@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookService.Migrations
 {
     [DbContext(typeof(BookDbContext))]
-    [Migration("20221213205738_initDB")]
-    partial class initDB
+    [Migration("20221215124614_initalDb")]
+    partial class initalDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,6 +57,9 @@ namespace BookService.Migrations
 
                     b.Property<int>("TotalOfBook")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

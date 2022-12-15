@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\XENOL\\source\\library-management-project\\authservice\\AuthService.csproj": {}
+    "C:\\Users\\XENOL\\source\\library-management-project\\AuthService\\AuthService.csproj": {}
   },
   "projects": {
-    "C:\\Users\\XENOL\\source\\library-management-project\\authservice\\AuthService.csproj": {
+    "C:\\Users\\XENOL\\source\\library-management-project\\AuthService\\AuthService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\XENOL\\source\\library-management-project\\authservice\\AuthService.csproj",
+        "projectUniqueName": "C:\\Users\\XENOL\\source\\library-management-project\\AuthService\\AuthService.csproj",
         "projectName": "AuthService",
-        "projectPath": "C:\\Users\\XENOL\\source\\library-management-project\\authservice\\AuthService.csproj",
+        "projectPath": "C:\\Users\\XENOL\\source\\library-management-project\\AuthService\\AuthService.csproj",
         "packagesPath": "C:\\Users\\XENOL\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\XENOL\\source\\library-management-project\\authservice\\obj\\",
+        "outputPath": "C:\\Users\\XENOL\\source\\library-management-project\\AuthService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\XENOL\\AppData\\Roaming\\NuGet\\NuGet.Config",

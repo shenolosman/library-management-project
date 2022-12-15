@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BookService.Migrations
 {
     /// <inheritdoc />
-    public partial class initDB : Migration
+    public partial class initalDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,6 +21,7 @@ namespace BookService.Migrations
                     Price = table.Column<double>(type: "float", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PageNumber = table.Column<int>(type: "int", nullable: false),
                     TotalOfBook = table.Column<int>(type: "int", nullable: false),

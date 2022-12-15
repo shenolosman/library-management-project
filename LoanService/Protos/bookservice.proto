@@ -1,0 +1,24 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+option csharp_namespace = "LoanService.Protos";
+
+message BookRequest {
+    string BookId = 1;
+}
+
+message BookResponse {
+    string Id = 1;
+    string Name = 2;
+    string Author = 3;
+    double Price = 4;
+    string Image = 5;
+    string Category = 6;
+    google.protobuf.Timestamp CreatedDate = 7;
+    int32 PageNumber = 8;
+    int32 TotalOfBook = 9;
+    bool IsAvailable = 10;
+}
+
+service GetBookService {
+    rpc GetBook(BookRequest) returns (BookResponse);
+}
