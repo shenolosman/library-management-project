@@ -8,7 +8,7 @@ services:
       - 1433:1433
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: Passw0rd!
+      SA_PASSWORD: ECSweden2022!
     volumes:
       - ./volumes/AuthDB:/var/opt/mssql/data
 
@@ -19,7 +19,7 @@ services:
       - 1434:1433
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: Passw0rd!
+      SA_PASSWORD: ECSweden2022!
     volumes:
       - ./volumes/BookDB:/var/opt/mssql/data
 
@@ -30,7 +30,7 @@ services:
       - 1435:1433
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: Passw0rd!
+      SA_PASSWORD: ECSweden2022!
     volumes: 
       - ./volumes/LoanDB:/var/opt/mssql/data
 
@@ -49,7 +49,7 @@ services:
     restart: always
     ports:
       - 3001:80
-      - 3005:123
+      - 3005:5555
     depends_on:
       - bookservicedb
 

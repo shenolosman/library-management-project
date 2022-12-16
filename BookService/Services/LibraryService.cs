@@ -29,7 +29,7 @@ namespace BookService.Services
                 response.Price = (double)book.Price;
                 response.Image = book.Image;
                 response.Category = book.Category;
-                response.CreatedDate = Timestamp.FromDateTime(book.CreatedDate);
+                // response.CreatedDate = Timestamp.FromDateTime(book.CreatedDate);
                 response.PageNumber = book.PageNumber;
                 response.TotalOfBook = book.TotalOfBook;
                 response.IsAvailable = book.IsAvailable;

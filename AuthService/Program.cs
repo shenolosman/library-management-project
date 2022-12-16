@@ -23,9 +23,9 @@ app.MapPost("/register", async (UserRegister userDto, AuthDbContext db) =>
     var newUser = new User
     {
         Name = userDto.Name,
-        Email=userDto.Email,
-        Password=userDto.Password,
-        Role=userDto.Role
+        Email = userDto.Email,
+        Password = userDto.Password,
+        Role = userDto.Role
     };
     await db.Users.AddAsync(newUser);
     await db.SaveChangesAsync();
@@ -40,7 +40,9 @@ app.MapPost("/login", async (UserLogin userLogin, AuthDbContext db) =>
 
     var secretKey = builder.Configuration["Jwt:Key"];
     if (secretKey == null) return Results.StatusCode(500);
-
+    if (user.Name == null) return Results.BadRequest("user Name is empty!");
+    if (user.Email == null) return Results.BadRequest("user Email is empty!");
+    if (user.Role == null) return Results.BadRequest("user Role is empty!");
     var claims = new[]{
         new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
         new Claim(ClaimTypes.Email,user.Email),

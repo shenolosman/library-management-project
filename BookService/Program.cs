@@ -75,7 +75,7 @@ app.MapPut("/book/{id}", [Authorize(AuthenticationSchemes = JwtBearerDefaults.Au
     book.IsAvailable = bookDto.IsAvailable;
     book.PageNumber = bookDto.PageNumber;
     book.Price = book.Price;
-    book.UpdatedDate = DateTime.Now;
+    // book.UpdatedDate = DateTime.Now;
 
     await ctx.SaveChangesAsync();
 
@@ -110,8 +110,8 @@ app.MapGet("/book/{id}", async (Guid id, BookDbContext ctx) =>
         PageNumber = book.PageNumber,
         Price = book.Price,
         TotalOfBook = book.TotalOfBook,
-        CreatedDate = book.CreatedDate,
-        UpdatedDate = book.UpdatedDate,
+        // CreatedDate = book.CreatedDate,
+        // UpdatedDate = book.UpdatedDate,
         IsAvailable = book.IsAvailable
     };
 

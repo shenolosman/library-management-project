@@ -8,8 +8,8 @@ namespace BookService.Model
         public double? Price { get; set; }
         public string? Image { get; set; }
         public string? Category { get; set; }
-        public DateTime? UpdatedDate { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        // public DateTime? UpdatedDate { get; set; }
+        // public DateTime CreatedDate { get; set; } = DateTime.Now;
         public int PageNumber { get; set; }
         public int TotalOfBook { get; set; }
         public bool IsAvailable { get; set; } = true;

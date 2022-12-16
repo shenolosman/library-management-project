@@ -1,5 +1,5 @@
 syntax = "proto3";
-import "google/protobuf/timestamp.proto";
+// import "google/protobuf/timestamp.proto";
 option csharp_namespace = "LoanService.Protos";
 
 message BookRequest {
@@ -13,10 +13,10 @@ message BookResponse {
     double Price = 4;
     string Image = 5;
     string Category = 6;
-    google.protobuf.Timestamp CreatedDate = 7;
-    int32 PageNumber = 8;
-    int32 TotalOfBook = 9;
-    bool IsAvailable = 10;
+    // google.protobuf.Timestamp CreatedDate = 7;
+    int32 PageNumber = 7;
+    int32 TotalOfBook = 8;
+    bool IsAvailable = 9;
 }
 
 service GetBookService {
