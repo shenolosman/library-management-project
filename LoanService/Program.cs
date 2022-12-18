@@ -40,8 +40,8 @@ using (var scope = app.Services.CreateScope())
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapPost("/loan", () => { return Results.Ok("Hello Loan"); });
-app.MapPost("/loan/{bookId}", async (string bookId, LoanContext ctx, HttpContext httpContext) =>
+app.MapPost("/", () => { return Results.Ok("Hello Loan"); });
+app.MapPost("/{bookId}", async (string bookId, LoanContext ctx, HttpContext httpContext) =>
 {
     using var channel = GrpcChannel.ForAddress("https://inventorycontainer--1zc5jvi.kindforest-a7062dfd.eastus.azurecontainerapps.io");
     var client = new GetBookService.GetBookServiceClient(channel);
@@ -57,10 +57,6 @@ app.MapPost("/loan/{bookId}", async (string bookId, LoanContext ctx, HttpContext
     {
         return Results.NotFound("Book was not found");
     }
-    // var bookResponse = new BookResponse
-    // {
-    //     TotalOfBook = -1
-    // };
     var userId = httpContext.User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
     if (userId == null)
     {
@@ -70,17 +66,21 @@ app.MapPost("/loan/{bookId}", async (string bookId, LoanContext ctx, HttpContext
     var loan = new Loan();
     loan.Id = Guid.NewGuid();
     loan.UserId = userId;
-    loan.LoanedDate=DateTime.UtcNow;
-    loan.BookAuthor=book.Author;
-    loan.BookCategory=book.Category;
-    // loan.TotalOfBook=(book.TotalOfBook)-1;
-    // if(loan.TotalOfBook==0) return Results.BadRequest("No Book left in library!");
-    loan.Available=book.IsAvailable;
+    loan.LoanedDate = DateTime.UtcNow;
+    loan.BookAuthor = book.Author;
+    loan.BookCategory = book.Category;
+    loan.TotalOfBook = (book.TotalOfBook) - 1;
+    if (loan.TotalOfBook == 0)
+    {
+        loan.Available = false;
+        return Results.BadRequest("No Book left in library!");
+    };
+    loan.Available = book.IsAvailable;
 
     await ctx.Loans.AddAsync(loan);
     await ctx.SaveChangesAsync();
 
-    return Results.Created($"/loan/{loan.Id}", "Book has been loaned");
+    return Results.Created($"/{loan.Id}", "Book has been loaned");
 });
 
 app.Run();

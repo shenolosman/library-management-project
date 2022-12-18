@@ -13,8 +13,8 @@ namespace BookService.Model.DTOs
         public double? Price { get; set; }
         public string? Image { get; set; }
         public string? Category { get; set; }
-        // public DateTime? UpdatedDate { get; set; }
-        // public DateTime CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
         public int PageNumber { get; set; }
         public int TotalOfBook { get; set; }
         public bool IsAvailable { get; set; }
