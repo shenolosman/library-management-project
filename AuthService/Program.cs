@@ -39,10 +39,7 @@ app.MapPost("/login", async (UserLogin userLogin, AuthDbContext db) =>
     if (user == null) return Results.NotFound("The username or password is not correct!");
 
     var secretKey = builder.Configuration["Jwt:Key"];
-    if (secretKey == null) return Results.StatusCode(500);
-    if (user.Name == null) return Results.BadRequest("user Name is empty!");
-    if (user.Email == null) return Results.BadRequest("user Email is empty!");
-    if (user.Role == null) return Results.BadRequest("user Role is empty!");
+    if (secretKey == null) return Results.BadRequest("Secret Key is Null");
     var claims = new[]{
         new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
         new Claim(ClaimTypes.Email,user.Email),
@@ -56,7 +53,7 @@ app.MapPost("/login", async (UserLogin userLogin, AuthDbContext db) =>
         claims: claims,
         expires: DateTime.UtcNow.AddMinutes(15),
         notBefore: DateTime.UtcNow,
-        signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)), SecurityAlgorithms.HmacSha256));
+        signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)), SecurityAlgorithms.HmacSha256Signature));
 
     var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 

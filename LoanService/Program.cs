@@ -1,22 +1,25 @@
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-using LoanService.Model;
 using Grpc.Net.Client;
-using LoanService.Protos;
+using System.Text;
 using LoanService;
+using LoanService.Protos;
+using LoanService.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<LoanContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters()
     {
         ValidateActor = true,
+        ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
@@ -29,21 +32,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     options.SaveToken = true;
 });
 
-builder.Services.AddAuthorization();
-
 var app = builder.Build();
+
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<LoanContext>();
-    db.Database.Migrate();
+    var ctx = scope.ServiceProvider.GetRequiredService<LoanContext>();
+    ctx.Database.Migrate();
 }
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapPost("/", () => { return Results.Ok("Hello Loan"); });
-app.MapPost("/{bookId}", async (string bookId, LoanContext ctx, HttpContext httpContext) =>
+
+
+app.MapPost("loan/{bookId}", async (string bookId, LoanContext ctx, HttpContext http) =>
 {
-    using var channel = GrpcChannel.ForAddress("https://inventorycontainer--1zc5jvi.kindforest-a7062dfd.eastus.azurecontainerapps.io");
+    var channel = GrpcChannel.ForAddress("http://192.168.10.151:6002");
     var client = new GetBookService.GetBookServiceClient(channel);
 
     var bookRequest = new BookRequest
@@ -57,30 +60,42 @@ app.MapPost("/{bookId}", async (string bookId, LoanContext ctx, HttpContext http
     {
         return Results.NotFound("Book was not found");
     }
-    var userId = httpContext.User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+    var userId = http.User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+
     if (userId == null)
     {
-        return Results.BadRequest("Bad token");
+        return Results.BadRequest("Bad token!");
     }
-
     var loan = new Loan();
-    loan.Id = Guid.NewGuid();
     loan.UserId = userId;
     loan.LoanedDate = DateTime.UtcNow;
     loan.BookAuthor = book.Author;
     loan.BookCategory = book.Category;
-    loan.TotalOfBook = (book.TotalOfBook) - 1;
-    if (loan.TotalOfBook == 0)
-    {
-        loan.Available = false;
-        return Results.BadRequest("No Book left in library!");
-    };
     loan.Available = book.IsAvailable;
-
+    if (loan.TotalOfBook == null || loan.TotalOfBook == 0)
+    {
+        loan.TotalOfBook = book.TotalOfBook;
+    }
+    else
+    {
+        loan.TotalOfBook -= -1;
+        if (loan.TotalOfBook == 0)
+        {
+            loan.Available = false;
+            return Results.BadRequest("No Book left in library!");
+        };
+    }
     await ctx.Loans.AddAsync(loan);
     await ctx.SaveChangesAsync();
 
-    return Results.Created($"/{loan.Id}", "Book has been loaned");
+    return Results.Created($"loan/{loan.Id}", "Book has been loaned");
 });
+app.MapGet("/loan/getall", async (LoanContext ctx, HttpContext http) =>
+{
+    var userId = http.User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
 
+    if (userId == null) return Results.BadRequest("Bad token!");
+
+    return Results.Ok(await ctx.Loans.ToListAsync());
+});
 app.Run();

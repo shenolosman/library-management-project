@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoanService.Migrations
 {
     [DbContext(typeof(LoanContext))]
-    [Migration("20221218192607_totalofbookfield")]
-    partial class totalofbookfield
+    [Migration("20221219090952_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,21 +31,19 @@ namespace LoanService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Available")
+                    b.Property<bool?>("Available")
                         .HasColumnType("bit");
 
                     b.Property<string>("BookAuthor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BookCategory")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LoanedDate")
+                    b.Property<DateTime?>("LoanedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TotalOfBook")
+                    b.Property<int?>("TotalOfBook")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")

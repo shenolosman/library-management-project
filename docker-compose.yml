@@ -39,7 +39,7 @@ services:
     image: authservice
     restart: always
     ports:
-      - 3000:80
+      - 6001:80
     depends_on:
       - userservicedb
 
@@ -48,8 +48,8 @@ services:
     image: bookservice
     restart: always
     ports:
-      - 3001:80
-      - 3005:123
+      - 6002:80
+      - 6003:123
     depends_on:
       - bookservicedb
 
@@ -58,6 +58,6 @@ services:
     image: loanservice
     restart: always
     ports:
-      - 3002:80      
+      - 6004:80      
     depends_on:
       - loanservicedb

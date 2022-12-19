@@ -28,21 +28,19 @@ namespace LoanService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Available")
+                    b.Property<bool?>("Available")
                         .HasColumnType("bit");
 
                     b.Property<string>("BookAuthor")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BookCategory")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LoanedDate")
+                    b.Property<DateTime?>("LoanedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TotalOfBook")
+                    b.Property<int?>("TotalOfBook")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LoanService.Migrations
 {
     /// <inheritdoc />
-    public partial class initialDb : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,9 +16,12 @@ namespace LoanService.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BookId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LoanedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LoanedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    BookAuthor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TotalOfBook = table.Column<int>(type: "int", nullable: true),
+                    Available = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
