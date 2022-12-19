@@ -1,36 +1,36 @@
 version: "3.9"
 
 services:
-  userservicedb:
+  userdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
     restart: always
     ports:
-      - 1433:1433
+      - 2433:1433
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: ECSweden2022!
+      MSSQL_SA_PASSWORD: 2Secure*Password2
     volumes:
       - ./volumes/AuthDB:/var/opt/mssql/data
 
-  bookservicedb:
+  bookdb:
     image: mcr.microsoft.com/mssql/server:2022-latest
     restart: always
     ports:
-      - 1434:1433
+      - 2434:1433
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: ECSweden2022!
+      MSSQL_SA_PASSWORD: 2Secure*Password21
     volumes:
       - ./volumes/BookDB:/var/opt/mssql/data
 
-  loanservicedb:
+  loandb:
     image: mcr.microsoft.com/mssql/server:2022-latest
     restart: always
     ports:
-      - 1435:1433
+      - 2435:1433
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: ECSweden2022!
+      MSSQL_SA_PASSWORD: 2Secure*Password22
     volumes: 
       - ./volumes/LoanDB:/var/opt/mssql/data
 
@@ -41,7 +41,7 @@ services:
     ports:
       - 6001:80
     depends_on:
-      - userservicedb
+      - userdb
 
   bookservice:
     # build: ./BookService
@@ -51,7 +51,7 @@ services:
       - 6002:80
       - 6003:123
     depends_on:
-      - bookservicedb
+      - bookdb
 
   loanservice:
     # build: ./LoanService
@@ -60,4 +60,4 @@ services:
     ports:
       - 6004:80      
     depends_on:
-      - loanservicedb
+      - loandb

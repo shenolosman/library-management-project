@@ -46,7 +46,7 @@ app.UseAuthorization();
 
 app.MapPost("loan/{bookId}", async (string bookId, LoanContext ctx, HttpContext http) =>
 {
-    var channel = GrpcChannel.ForAddress("http://192.168.10.151:6002");
+    var channel = GrpcChannel.ForAddress("http://bookservice");
     var client = new GetBookService.GetBookServiceClient(channel);
 
     var bookRequest = new BookRequest
